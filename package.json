@@ -1,0 +1,19 @@
+{
+  "name": "statsupapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "scripts": {
+    "start": "node db.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "cors": "^2.8.5",
+    "fastify": "^4.26.0",
+    "mysql2": "^3.9.1",
+    "node": "^21.6.1"
+  }
+}
