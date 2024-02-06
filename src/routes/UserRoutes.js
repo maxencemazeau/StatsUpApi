@@ -6,7 +6,6 @@ function userRoutes (fastify, options, done) {
 
    fastify.get('/userLogin', userController.userLogin)
 
-
    done()
 }
 
