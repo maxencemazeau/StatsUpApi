@@ -15,5 +15,8 @@
     "fastify": "^4.26.0",
     "mysql2": "^3.9.1",
     "node": "^21.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
