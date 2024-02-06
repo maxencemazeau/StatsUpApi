@@ -7,4 +7,10 @@ const userLogin = async (req, res) => {
     res.send(user)
 }
 
-module.exports = { userLogin }
+const getAllUsers = async (req, res) => {
+    const users = await userServices.getAllUsersService()
+    res.send(users)
+}
+
+
+module.exports = { userLogin, getAllUsers }

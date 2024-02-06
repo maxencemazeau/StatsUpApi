@@ -5,5 +5,9 @@ const userLoginService = async(email, password) => {
     return query[0]
 };
 
+const getAllUsersService = async() => {
+    const query = await db.query('SELECT * FROM User')
+    return query[0]
+}
 
-module.exports = { userLoginService }
+module.exports = { userLoginService, getAllUsersService }
