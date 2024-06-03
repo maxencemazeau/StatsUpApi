@@ -6,4 +6,14 @@ const userActivity = async(req, res)=>{
     res.send(activity)
 }
 
-module.exports = { userActivity }
+const addActivity = async (req, res)=> {
+    const { ActivityName,  GoalsStatut, ActivityTypeId, GoalsId, UserId} = req.body
+    const addActivity = await activityServices.AddNewActivity(ActivityName, GoalsStatut, ActivityTypeId, GoalsId, UserId)
+    if (addActivity){
+        res.send("Activity successfully created")
+    } else {
+        res.send("Error while adding the new activity")
+    }
+}
+
+module.exports = { userActivity, addActivity }
