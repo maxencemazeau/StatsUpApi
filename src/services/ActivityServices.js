@@ -2,7 +2,7 @@ const db = require('../db');
 
 
 const ActivityById = async(id) => {
-    const query = await db.query(`SELECT ActivityID, ActivityName, ActivityTypeID, Activity.GoalsID, GoalStatut, Frequence, FrequenceType,Frame, Activity.UserID FROM Activity
+    const query = await db.query(`SELECT ActivityID, ActivityName, ActivityTypeID, Activity.GoalsID, GoalStatut, Frequence, FrequenceType,Frame, Activity.UserID, Timer FROM Activity
     INNER JOIN Goals ON Goals.GoalsID = Activity.GoalsID
     INNER JOIN TimeFrame ON TimeFrame.TimeFrameID = Goals.TimeFrameID
     WHERE Activity.UserID = ?`, [id])
