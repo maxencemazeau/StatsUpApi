@@ -22,15 +22,16 @@ export interface ValidationFunction {
 
 export interface RequestRouteOptions<ContextConfig = ContextConfigDefault, SchemaCompiler = FastifySchema> {
   method: string;
-  url: string;
-  bodyLimit:number;
-  attachValidation:boolean;
-  logLevel:string;
+  // `url` can be `undefined` for instance when `request.is404` is true
+  url: string | undefined;
+  bodyLimit: number;
+  attachValidation: boolean;
+  logLevel: string;
   version: string | undefined;
   exposeHeadRoute: boolean;
   prefixTrailingSlash: string;
   config: FastifyContextConfig & FastifyRouteConfig & ContextConfig;
-  schema: SchemaCompiler;
+  schema?: SchemaCompiler; // it is empty for 404 requests
   handler: RouteHandlerMethod;
 }
 
@@ -63,7 +64,7 @@ export interface FastifyRequest<RouteGeneric extends RouteGenericInterface = Rou
   body: RequestType['body'];
   context: FastifyRequestContext<ContextConfig>;
   routeConfig: FastifyRequestContext<ContextConfig>['config'];
-  routeSchema: FastifySchema
+  routeSchema?: FastifySchema; // it is empty for 404 requests
 
   /** in order for this to be used the user should ensure they have set the attachValidation option. */
   validationError?: Error & { validation: any; validationContext: string };
