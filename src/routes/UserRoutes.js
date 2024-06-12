@@ -1,20 +1,34 @@
-const userController = require('../controllers/UserController')
+const userController = require('../controllers/UserController');
 
 const getActivityById = {
    schema: {
       response: {
-         200:{
+         200: {
             type: 'array',
          }
       }
    }
-}
+};
 
-function userRoutes (fastify, options, done) {
+function userRoutes(fastify, options, done) {
+   fastify.get('/userLogin', userController.userLogin);
+   fastify.get('/getAllUsers', userController.getAllUsers);
 
-   fastify.get('/userLogin', userController.userLogin)
-   fastify.get('/getAllUsers', userController.getAllUsers)
-   done()
+   fastify.post('/userSignUp', {
+       schema: {
+           body: {
+               type: 'object',
+               required: ['email', 'username', 'password'],
+               properties: {
+                   email: { type: 'string', format: 'email' },
+                   username: { type: 'string' },
+                   password: { type: 'string' }
+               }
+           }
+       }
+   }, userController.userSignUp);
+   
+   done();
 }
 
 module.exports = userRoutes;
