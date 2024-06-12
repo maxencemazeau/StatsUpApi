@@ -26,3 +26,5 @@ const AddNewActivity = async (ActivityName, GoalsStatut, ActivityTypeId, GoalsId
 }
 
 module.exports = { ActivityById, AddNewActivity, rowsAfterOffset }
+
+
