@@ -1,7 +1,8 @@
 const userServices = require('../services/UserServices');
 
 const userLogin = async (req, res) => {
-    const { email, password } = req.query;
+    const { email, password } = req.body;
+    console.log('Login request received:', email, password); // Log request data for debugging
     try {
         const user = await userServices.userLoginService(email, password);
         if (user) {
@@ -10,6 +11,7 @@ const userLogin = async (req, res) => {
             res.status(401).send({ error: 'Invalid email or password' });
         }
     } catch (error) {
+        console.error('Error in userLogin:', error); // Log the error for debugging
         res.status(500).send({ error: 'Internal Server Error' });
     }
 };

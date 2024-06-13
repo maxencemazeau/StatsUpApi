@@ -11,7 +11,7 @@ const getActivityById = {
 };
 
 function userRoutes(fastify, options, done) {
-   fastify.get('/userLogin', userController.userLogin);
+   fastify.post('/userLogin', userController.userLogin);
    fastify.get('/getAllUsers', userController.getAllUsers);
 
    fastify.post('/userSignUp', {
