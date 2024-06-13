@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db'); // Adjust the path as necessary
@@ -14,15 +15,9 @@ const userLoginService = async (email, password) => {
             console.log('User not found');
             return null;
         }
- 
-        // Log password and user's hashed password to debug
-        console.log ('User Info:', user)
-        console.log('Password:', password);
-        console.log('User Password:', user.Password);
-        console.log('User lastname:', user.LastName);
 
         // Compare password with hashed password
-        const passwordMatch = await bcrypt.compare(password, user.Password);
+        const passwordMatch = await bcrypt.compare(password, user[0].Password);
 
         // If passwords match, generate token and return user with token
         if (passwordMatch) {
