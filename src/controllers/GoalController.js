@@ -3,6 +3,7 @@ const goalServices = require('../services/GoalServices')
 const userGoal = async (req, res) => {
     let noMoreData = false;
     let limit = 5
+    let goal = []
     const { id, offset } = req.query
     const availableRows = await goalServices.rowsAfterOffset(id)
     const lastAvailableRow = availableRows[0].lastAvailableRows - offset
@@ -10,9 +11,15 @@ const userGoal = async (req, res) => {
         limit = lastAvailableRow
         noMoreData = true
     }
-    const offsetValue = parseInt(offset);
-    const limitValue = parseInt(limit)
-    const goal = await goalServices.userGoal(id, limitValue, offsetValue)
+
+    if(lastAvailableRow > 0){
+        const offsetValue = parseInt(offset);
+        const limitValue = parseInt(limit)
+        goal = await goalServices.userGoal(id, limitValue, offsetValue)
+    } else{
+        noMoreData = true
+    }
+
     res.send({ goal, noMoreData })
 
 }
