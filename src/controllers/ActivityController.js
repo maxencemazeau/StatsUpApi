@@ -24,8 +24,9 @@ const userActivity = async (req, res) => {
 }
 
 const addActivity = async (req, res) => {
-    const { ActivityName, GoalsStatut, ActivityTypeId, GoalsId, UserId } = req.body
-    const addActivity = await activityServices.AddNewActivity(ActivityName, GoalsStatut, ActivityTypeId, GoalsId, UserId)
+    const { ActivityName, UserId } = req.body.params
+    console.log(ActivityName)
+    const addActivity = await activityServices.AddNewActivity(ActivityName, UserId)
     if (addActivity) {
         res.send("Activity successfully created")
     } else {
