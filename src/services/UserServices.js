@@ -41,13 +41,27 @@ const getAllUsersService = async () => {
 const userSignUpService = async (email, username, password) => {
     try {
         // Check if email already exists
-        const existingUserQuery = await db.query('SELECT * FROM User WHERE email = ?', [email]);
+        const existingUserQuery = await db.query('SELECT Email FROM User WHERE email = ?', [email]);
         const existingUser = existingUserQuery[0]; // Extract the first row of results
 
         if (existingUser && existingUser.length > 0) {
             // Email already exists
             return { error: 'Email already in use' };
-        }
+
+            } else {
+            // Check if username already exists
+            const existingUsernameQuery = await db.query('SELECT Username FROM User WHERE username = ?', [username]);
+            const existingUsername = existingUsernameQuery[0]; // Extract the first row of results
+
+            if (existingUsername && existingUsername.length > 0) {
+                // Username already exists
+                return { error: 'Username already in use' };
+            }
+        
+         }
+    
+
+
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
