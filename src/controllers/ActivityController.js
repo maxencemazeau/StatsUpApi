@@ -3,6 +3,7 @@ const activityServices = require('../services/ActivityServices')
 const userActivity = async (req, res) => {
     let noMoreData = false;
     let limit = 5
+    let activity = []
     const { id, offset } = req.query
     const availableRows = await activityServices.rowsAfterOffset(id)
     const lastAvailableRow = availableRows[0].lastAvailableRows - offset
@@ -11,17 +12,21 @@ const userActivity = async (req, res) => {
         limit = lastAvailableRow
         noMoreData = true
     }
-    const offsetValue = parseInt(offset);
-    const limitValue = parseInt(limit)
-    const activity = await activityServices.ActivityById(id, limitValue, offsetValue)
+    if(lastAvailableRow > 0){
+        const offsetValue = parseInt(offset);
+        const limitValue = parseInt(limit)
+         activity = await activityServices.ActivityById(id, limitValue, offsetValue)
+    } else {
+        noMoreData = true
+    }
 
     res.send({ activity, noMoreData })
-
 }
 
 const addActivity = async (req, res) => {
-    const { ActivityName, GoalsStatut, ActivityTypeId, GoalsId, UserId } = req.body
-    const addActivity = await activityServices.AddNewActivity(ActivityName, GoalsStatut, ActivityTypeId, GoalsId, UserId)
+    const { ActivityName, UserId } = req.body.params
+    console.log(ActivityName)
+    const addActivity = await activityServices.AddNewActivity(ActivityName, UserId)
     if (addActivity) {
         res.send("Activity successfully created")
     } else {
