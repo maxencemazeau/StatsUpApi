@@ -15,7 +15,7 @@ fastify.register(userRoutes);
 fastify.register(activityRoutes)
 fastify.register(goalRoutes)
 
-fastify.listen({port, host}, (err, address) => {
+fastify.listen(port, (err, address) => {
     if (err) {
       console.error(err);
       process.exit(1);
