@@ -19,9 +19,9 @@ const rowsAfterOffset = async (id) => {
     return query[0]
 }
 
-const AddNewActivity = async (ActivityName, UserId) => {
+const AddNewActivity = async (ActivityName, Timer, GoalsId, UserId) => {
     try{
-    const query = await db.query(`INSERT INTO Activity (ActivityName, UserID) values (?,?)`, [ActivityName, UserId])
+    const query = await db.query(`INSERT INTO Activity (ActivityName, Timer, GoalsID, UserID) values (?,?,?,?)`, [ActivityName, Timer, GoalsId, UserId])
     return query[0]
     } catch (err) {
         console.log(err)

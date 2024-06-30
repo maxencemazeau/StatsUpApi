@@ -18,5 +18,13 @@ const rowsAfterOffset = async (id) => {
     return query[0]
 }
 
+const createNewGoal = async(GoalName, TimeFrame, Frequence, UserId) => {
+    const query = await db.query(`INSERT INTO Goals (GoalName, TimeFrameID, Frequence, UserID) values (?,?,?,?)`, [GoalName, TimeFrame, Frequence, UserId])
+    // console.log(query)
+    if (query[0].affectedRows > 0){
+        console.log(query[0].insertId)
+        return query[0].insertId
+    }
+}
 
-module.exports = { userGoal, rowsAfterOffset }
+module.exports = { userGoal, rowsAfterOffset, createNewGoal }
