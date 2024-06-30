@@ -13,7 +13,7 @@ const getActivityById = {
 function userRoutes(fastify, options, done) {
    fastify.post('/userLogin', userController.userLogin);
    fastify.get('/getAllUsers', userController.getAllUsers);
-
+   fastify.get('/user', userController.user)
    fastify.post('/userSignUp', {
        schema: {
            body: {

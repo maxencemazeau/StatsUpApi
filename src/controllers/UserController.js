@@ -35,4 +35,9 @@ const userSignUp = async (req, res) => {
     }
 };
 
-module.exports = { userLogin, getAllUsers, userSignUp };
+const user = async(req, res) => {
+    const user = await userServices.user()
+    res.send(user)
+}
+
+module.exports = { userLogin, getAllUsers, userSignUp, user };

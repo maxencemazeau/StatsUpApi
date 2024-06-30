@@ -83,8 +83,14 @@ const userSignUpService = async (email, username, password) => {
     }
 };
 
+const user = async() => {
+    const query = await db.query('SELECT * FROM User')
+    return query[0]
+}
+
 module.exports = {
     userLoginService,
     getAllUsersService,
-    userSignUpService
+    userSignUpService,
+    user
 };
