@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const userLoginService = async (email, password) => {
     try {
         // Query user from the database
-        const query = await db.query('SELECT Email, Password FROM User WHERE email = ?', [email]);
+        const query = await db.query('SELECT UserID ,Email, Password FROM User WHERE email = ?', [email]);
         const user = query[0];
 
         // If user not found, return null
@@ -22,6 +22,7 @@ const userLoginService = async (email, password) => {
         // If passwords match, generate token and return user with token
         if (passwordMatch) {
             const token = jwt.sign({ id: user.UserID, email: user.Email }, JWT_SECRET, { expiresIn: '1h' });
+            console.log(user)
             return { user, token };
         } else {
             return null; // Incorrect password case
