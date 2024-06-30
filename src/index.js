@@ -3,6 +3,7 @@ require ('dotenv').config();
 const fastify = require('fastify')();
 const cors = require ('@fastify/cors');
 const port = 8080;
+const host = "0.0.0.0"
 const userRoutes = require('./routes/UserRoutes')
 const activityRoutes = require('./routes/ActivityRoutes')
 const goalRoutes = require("./routes/GoalRoutes")
@@ -14,7 +15,7 @@ fastify.register(userRoutes);
 fastify.register(activityRoutes)
 fastify.register(goalRoutes)
 
-fastify.listen({port, host: '0.0.0.0'}, (err, address) => {
+fastify.listen({port, host}, (err, address) => {
     if (err) {
       console.error(err);
       process.exit(1);
