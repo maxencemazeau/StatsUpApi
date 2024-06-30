@@ -71,7 +71,11 @@ function flush (stream) {
 }
 
 function transport (fullOptions) {
-  const { pipeline, targets, levels, dedupe, options = {}, worker = {}, caller = getCallers() } = fullOptions
+  const { pipeline, targets, levels, dedupe, worker = {}, caller = getCallers() } = fullOptions
+
+  const options = {
+    ...fullOptions.options
+  }
 
   // Backwards compatibility
   const callers = typeof caller === 'string' ? [caller] : caller
@@ -87,20 +91,29 @@ function transport (fullOptions) {
 
   if (targets) {
     target = bundlerOverrides['pino-worker'] || join(__dirname, 'worker.js')
-    options.targets = targets.map((dest) => {
+    options.targets = targets.filter(dest => dest.target).map((dest) => {
       return {
         ...dest,
         target: fixTarget(dest.target)
       }
+    })
+    options.pipelines = targets.filter(dest => dest.pipeline).map((dest) => {
+      return dest.pipeline.map((t) => {
+        return {
+          ...t,
+          level: dest.level, // duplicate the pipeline `level` property defined in the upper level
+          target: fixTarget(t.target)
+        }
+      })
     })
   } else if (pipeline) {
-    target = bundlerOverrides['pino-pipeline-worker'] || join(__dirname, 'worker-pipeline.js')
-    options.targets = pipeline.map((dest) => {
+    target = bundlerOverrides['pino-worker'] || join(__dirname, 'worker.js')
+    options.pipelines = [pipeline.map((dest) => {
       return {
         ...dest,
         target: fixTarget(dest.target)
       }
-    })
+    })]
   }
 
   if (levels) {
@@ -110,6 +123,8 @@ function transport (fullOptions) {
   if (dedupe) {
     options.dedupe = dedupe
   }
+
+  options.pinoWillSendConfig = true
 
   return buildStream(fixTarget(target), options, worker)
 
