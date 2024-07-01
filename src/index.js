@@ -23,6 +23,6 @@ fastify.listen(port, (err, address) => {
       console.error(err);
       process.exit(1);
     }
-    `Server listening on ${fastify.server.address().port}`
+    console.log(`Server listening on ${fastify.server.address().port}`)
     console.log(`Server is running on ${address}`);
   });
