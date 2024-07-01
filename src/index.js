@@ -8,7 +8,11 @@ const activityRoutes = require('./routes/ActivityRoutes')
 const goalRoutes = require("./routes/GoalRoutes")
 
 
-fastify.register(cors);
+fastify.register(cors, {
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST', 'DELETE'], // Allow these methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+});
 
 fastify.register(userRoutes);
 fastify.register(activityRoutes)
