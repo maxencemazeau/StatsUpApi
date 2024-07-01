@@ -2,6 +2,7 @@ require ('dotenv').config();
 
 const fastify = require('fastify')();
 const cors = require ('@fastify/cors');
+const db = require("./db")
 const port = 3000;
 const userRoutes = require('./routes/UserRoutes')
 const activityRoutes = require('./routes/ActivityRoutes')
